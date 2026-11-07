@@ -1,0 +1,103 @@
+Lab 2: Heuristic Search Algorithms (Maze Solver) :-
+
+** 1. Aim / Problem Statement :-
+
+To find a path from the Start cell `S` to the Goal cell `G` in a maze using five
+search algorithms (BFS, DFS, Hill Climbing, Best First Search and A*), and to compare
+them on path length, nodes explored and execution time.
+
+**2. Algorithm :-
+
+**Problem formulation**
+
+| Element | Maze problem |
+|---|---|
+| State | Cell `(row, col)` where the agent is standing |
+| Initial state | Cell marked `S` |
+| Actions | Up, Right, Down, Left (if the next cell is not a wall `#`) |
+| Goal test | Agent is on cell `G` |
+| Step cost | 1 per move |
+| Heuristic h(n) | Manhattan distance: `abs(r1 - r2) + abs(c1 - c2)` |
+
+**Algorithms used**
+
+| Algorithm | Idea | Data structure | Optimal? |
+|---|---|---|---|
+| BFS | Expands cells level by level | Queue | Yes (equal step cost) |
+| DFS | Goes as deep as possible, then backtracks | Stack | No |
+| Hill Climbing | Always moves to the neighbour with the lowest h(n); stops if none is better | None (single current cell) | No (can get stuck) |
+| Best First Search | Expands the cell with the lowest h(n) | Priority queue | No |
+| A* | Expands the cell with the lowest f(n) = g(n) + h(n) | Priority queue | Yes (with admissible h) |
+
+**Steps (common structure):**
+1. Put the start cell in the frontier (queue / stack / priority queue).
+2. Remove one cell from the frontier and mark it explored.
+3. If it is the goal, backtrack through parent links to build the path.
+4. Otherwise add its unvisited walkable neighbours to the frontier.
+5. Repeat until the goal is found or the frontier is empty.
+
+**3. Results / Output :-
+
+Maze used (`S` = start, `G` = goal, `#` = wall):
+
+```
+S . . # . . . . . .
+# # . # . # # # # .
+. . . . . . . . # .
+. # # # # # # . # .
+. # . . . . # . . .
+. # # # # . # # # #
+. . . . . . . . . G
+```
+
+Path found by BFS / DFS / Best First / A* (`*` marks the path, length 19):
+
+```
+S * * # . . . . . .
+# # * # . # # # # .
+* * * . . . . . # .
+* # # # # # # . # .
+* # . . . . # . . .
+* # # # # . # # # #
+* * * * * * * * * G
+```
+
+Hill Climbing could not reach the goal: it moved towards the goal, reached a dead end
+on the right side of the maze and got stuck at a local optimum.
+
+** 4. Performance Analysis :-
+
+| Algorithm | Path Found | Path Length | Nodes Explored | Time (ms) |
+
+| BFS | Yes | 19 | 43 | (your value) |
+| DFS | Yes | 19 | 20 | (your value) |
+| Hill Climbing | No | - | 14 | (your value) |
+| Best First | Yes | 19 | 39 | (your value) |
+| A* | Yes | 19 | 39 | (your value) |
+
+Time is the average of 200 runs; copy the values printed on your own system.
+
+**Observations**
+- BFS and A* both returned a shortest path (length 19), as expected for optimal algorithms.
+- A* explored fewer nodes than BFS (39 vs 43) because the heuristic guides it towards the goal.
+- Hill Climbing failed because it never moves to a worse cell, so it cannot escape a dead end.
+
+
+** 5. Screenshots :-
+
+Terminal output:
+
+![Terminal output](outputs/terminal_output.png)
+
+Comparison chart (nodes explored and execution time):
+
+![Comparison chart](outputs/comparison.png)
+
+** 6. Learning Outcomes:-
+
+- Learned to formulate a maze as a state space problem (state, actions, goal test, cost).
+- Implemented uninformed (BFS, DFS) and heuristic (Hill Climbing, Best First, A*) searches.
+- Understood the role of a heuristic such as Manhattan distance.
+- Saw why Hill Climbing can fail at a local optimum, while A* stays optimal.
+- Compared algorithms using path length, nodes explored and execution time.
+
