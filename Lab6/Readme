@@ -1,0 +1,89 @@
+# Lab 6: Deep Learning Fundamentals using PyTorch
+
+**Course:** IC-709D | AI Lab  * Unit 6 *
+
+## 1. Aim / Problem Statement
+To learn the fundamentals of deep learning with PyTorch:
+
+- Tensor manipulation and automatic differentiation (gradient computation)
+- Linear regression from scratch and with `nn.Linear`
+- Training loop, loss functions and optimizers
+- Neural network basics (MLP) and model evaluation
+- Applications: House Price Prediction, Student Score Prediction, Sales Forecasting
+- Analysis: traditional ML vs deep learning, and convergence of gradient-based learning
+
+## 2. Files in this folder
+
+| File | Description |
+|------|-------------|
+| `PyTorchBasics.ipynb` | Notebook version (best run on Google Colab, PyTorch is pre-installed) |
+| `pytorch_basics.py` | Same code as a modular Python script |
+| `outputs/` | Graphs and CSV tables are saved here when you run the code |
+| `../datasets/house_price.csv`, `student_score.csv`, `sales.csv` | Datasets (shared `datasets/` folder) |
+| `../models/linear_regression.pt` | Saved linear model (created when you run `demo_house_price`) |
+
+Run: `pip install torch scikit-learn pandas numpy matplotlib` then `python pytorch_basics.py`
+
+> **Notes**
+> - The three datasets are *synthetic*; the script generates them if the CSV is missing. Replace them with real datasets for the final submission (keep the target column names `price`, `final_score`, `sales`, or edit `DATASETS`).
+> - Run the code once and **fill in the "Run and fill" cells below from your own output** (`outputs/` folder). They are left blank on purpose so that the README only contains numbers you actually produced.
+
+## 3. Algorithm
+1. **Tensors:** create, reshape, index, broadcast, matrix multiply, convert to/from NumPy.
+2. **Autograd:** build a computation graph with `requires_grad=True`; `loss.backward()` computes gradients, which are checked against hand-derived gradients.
+3. **Linear regression (gradient descent):**
+   - Forward: `pred = w*x + b`
+   - Loss: MSE
+   - Backward: `loss.backward()`
+   - Update: `w -= lr * w.grad`, then zero the gradients
+4. **Training loop (`nn.Module`):** standardise data, mini-batch loop of `zero_grad` -> forward -> loss -> `backward` -> `optimizer.step()`.
+5. **Neural network:** `nn.Sequential` of `Linear` + `ReLU` layers.
+6. **Evaluation:** R2, RMSE and MAE on the test set (in original units). Sales uses a chronological split so the model forecasts the future.
+
+## 4. Results / Output
+Run and fill:
+
+| Item | Your result |
+|------|-------------|
+| Gradient check (autograd vs analytic) | |
+| From-scratch fit: learned w, b (true 2.0, 1.0) | |
+| House Price (PyTorch linear): R2 / RMSE | |
+| Student Score (MLP [16, 8]): R2 / RMSE | |
+| Sales Forecast (PyTorch linear): R2 / RMSE | |
+
+## 5. Performance Analysis
+
+**Traditional ML baselines** (scikit-learn, computed on the synthetic data; same test split as the PyTorch code):
+
+| Dataset | Model | R2 | RMSE | Train time (s) |
+|---------|-------|----|------|----------------|
+| house_price | LinearRegression | 0.997 | 251218 | 0.016 |
+| house_price | RandomForest | 0.997 | 228657 | 0.170 |
+| student_score | LinearRegression | 0.939 | 3.251 | 0.001 |
+| student_score | RandomForest | 0.916 | 3.813 | 0.127 |
+| sales | LinearRegression | 0.918 | 8.429 | 0.001 |
+| sales | RandomForest | -3.295 | 61.000 | 0.076 |
+
+Observation: the Random Forest fails badly on the sales forecast because tree models cannot extrapolate beyond the range of training values (the sales trend keeps rising in the test months).
+
+**PyTorch models (run `demo_ml_vs_dl` and fill):**
+
+| Dataset | PyTorch Linear R2 | PyTorch MLP R2 | Train time (s) |
+|---------|-------------------|----------------|----------------|
+| house_price | | | |
+| student_score | | | |
+| sales | | | |
+
+**Convergence analysis (run `demo_convergence` and fill):** compare SGD (lr 0.01, 0.1, 1.5), SGD with momentum and Adam using `outputs/convergence_comparison.png` and `convergence_summary.csv`. Points to discuss:
+- Which optimizer reaches a low loss in the fewest epochs?
+- What happens with the too-large learning rate (lr = 1.5)?
+- Is a neural network better than linear regression for these datasets, and is it worth the extra training time?
+
+(Accuracy, precision and recall are not used here as these are regression problems.)
+
+## 7. Learning Outcomes
+- Can create and manipulate tensors and use autograd to compute gradients.
+- Can write a gradient descent training loop by hand and with PyTorch's `nn`, loss functions and optimizers.
+- Understand how the learning rate and the optimizer affect convergence.
+- Can compare classical ML models and neural networks fairly, using the same data split and metrics.
+- Understand why time-series forecasting needs a chronological split and why tree models extrapolate poorly.
