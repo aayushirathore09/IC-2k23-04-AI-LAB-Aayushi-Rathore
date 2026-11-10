@@ -1,0 +1,66 @@
+
+===== 1. University Knowledge Base =====
+Q1. Which courses is Riya eligible for?
+    ('eligible', 'Riya', 'Python')
+    ('eligible', 'Riya', 'AI')
+Q2. Who is taught by Dr_Sharma?
+    ('taught_by', 'Riya', 'Dr_Sharma')
+    ('taught_by', 'Karan', 'Dr_Sharma')
+Q3. Classmates of Riya (excluding herself):
+    ('classmate', 'Riya', 'Karan')
+
+===== 2. Medical Knowledge Representation =====
+Patient symptoms: ['cough', 'fatigue', 'fever', 'headache']
+   Influenza    match = 80%
+   COVID-19     match = 60%
+   Malaria      match = 40%
+   Migraine     match = 33%
+   Common Cold  match = 25%
+Advice for top match: Rest, fluids, consult a doctor if severe.
+
+===== 3. Semantic Network =====
+Tweety: {'has': ['Cells', 'Wings'], 'can': ['Move', 'Fly']}
+Tux: {'has': ['Cells', 'Wings'], 'can': ['Move', 'Swim']}
+Dog: {'has': ['Cells'], 'can': ['Move']}
+
+===== 4. Frame Representation =====
+Frame<Rahul>  (is-a MCA_Student)
+    name        : Rahul
+    age         : 23
+    course      : MCA
+    marks       : 86
+    grade       : A
+    has_id_card : True
+Frame<Meena>  (is-a MCA_Student)
+    name        : Meena
+    age         : 22
+    course      : MCA
+    marks       : 55
+    grade       : C
+    has_id_card : True
+Handled missing slot -> "Slot 'salary' not found in frame 'Rahul'"
+
+===== 5. Expert System (Application) =====
+Explanation (rules fired):
+    [E3] => ('cause', 'failing_hdd_or_malware')
+    [E4] => ('cause', 'clogged_fan')
+    [E7] => ('fix', 'run_antivirus_and_backup_data')
+    [E8] => ('fix', 'clean_fan_and_use_cooling_pad')
+Recommended fixes: ['clean_fan_and_use_cooling_pad', 'run_antivirus_and_backup_data']
+
+===== 6. Recommendation Engine (Application) =====
+Riya (interests=['ai', 'logic']):
+    AI                           score = 0.67
+Aman (interests=['data', 'prediction']):
+    ML                           score = 0.67
+
+===== 7. Analysis =====
+                           Method  Avg time (ms)
+Forward chaining (all inferences)          0.797
+     Backward chaining (one goal)          0.185
+     Aspect                        Frames                           Semantic Networks              Rule-Based Systems
+  Structure                Slots + values             Graph of nodes + labelled links                   IF-THEN rules
+Inheritance   Yes, strong (with defaults)                         Yes, via is_a links               No (not built in)
+  Reasoning  Default/if-needed procedures                             Graph traversal       Forward/backward chaining
+   Best for            Structured objects                       Concept relationships      Decision making, diagnosis
+   Weakness Hard to express complex logic No standard semantics; exceptions are messy Many rules are hard to maintain

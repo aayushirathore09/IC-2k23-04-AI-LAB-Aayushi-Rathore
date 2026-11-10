@@ -1,0 +1,3 @@
+Method,Avg time (ms)
+Forward chaining (all inferences),0.797
+Backward chaining (one goal),0.185

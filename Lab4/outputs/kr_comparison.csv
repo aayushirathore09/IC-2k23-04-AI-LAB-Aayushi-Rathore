@@ -1,0 +1,6 @@
+Aspect,Frames,Semantic Networks,Rule-Based Systems
+Structure,Slots + values,Graph of nodes + labelled links,IF-THEN rules
+Inheritance,"Yes, strong (with defaults)","Yes, via is_a links",No (not built in)
+Reasoning,Default/if-needed procedures,Graph traversal,Forward/backward chaining
+Best for,Structured objects,Concept relationships,"Decision making, diagnosis"
+Weakness,Hard to express complex logic,No standard semantics; exceptions are messy,Many rules are hard to maintain
